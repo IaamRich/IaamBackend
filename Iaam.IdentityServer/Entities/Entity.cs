@@ -1,8 +1,11 @@
-﻿namespace Iaam.IdentityServer.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Iaam.IdentityServer.Entities
 {
     public class Entity
     {
-        protected Guid Id { get; set; }
+        [Key]
+        public Guid Id { get; set; } = default!;
 
         public Entity()
         {
