@@ -10,5 +10,7 @@ namespace Core.Context
             : base(options)
         {
         }
+
+        public DbSet<AddressEntity> Addresses { get; set; }
     }
 }

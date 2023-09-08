@@ -4,6 +4,7 @@ using Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Migrations
 {
     [DbContext(typeof(CoreDbContext))]
-    partial class CoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230908230124_Update_AddressTable_Name")]
+    partial class Update_AddressTable_Name
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace Core.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Core.Entities.AddressEntity", b =>
+            modelBuilder.Entity("Core.Entities.AspNetAddress", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,7 +55,7 @@ namespace Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("AspNetAddress");
                 });
 
             modelBuilder.Entity("Core.Entities.UserEntity", b =>
@@ -266,7 +269,7 @@ namespace Core.Migrations
 
             modelBuilder.Entity("Core.Entities.UserEntity", b =>
                 {
-                    b.HasOne("Core.Entities.AddressEntity", "Address")
+                    b.HasOne("Core.Entities.AspNetAddress", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId");
 
