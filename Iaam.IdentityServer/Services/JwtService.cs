@@ -1,4 +1,4 @@
-﻿using Iaam.IdentityServer.Entities;
+﻿using Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

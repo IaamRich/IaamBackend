@@ -1,4 +1,4 @@
-﻿using Iaam.IdentityServer.Entities;
+﻿using Core.Entities;
 using Iaam.IdentityServer.Models;
 using Iaam.IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;

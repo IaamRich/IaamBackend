@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Core.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
-namespace Iaam.IdentityServer.Entities
+namespace Core.Entities
 {
-    public class Entity
+    public class Entity : IEntity
     {
         [Key]
         public Guid Id { get; set; } = default!;

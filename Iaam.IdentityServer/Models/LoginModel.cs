@@ -1,6 +1,5 @@
 ﻿namespace Iaam.IdentityServer.Models
-{
-
+{ 
 #nullable disable
     public class LoginModel
     {

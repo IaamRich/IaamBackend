@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Iaam.IdentityServer.Migrations
+namespace Core.Migrations
 {
     /// <inheritdoc />
     public partial class Added_Initial_Entities : Migration
