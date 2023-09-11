@@ -5,7 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Iaam.IdentityServer.Services;
+namespace IdentityServer.Services;
 public class JwtService
 {
     private readonly RoleManager<IdentityRole> _roleManager;

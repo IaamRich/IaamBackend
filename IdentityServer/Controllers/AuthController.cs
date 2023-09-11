@@ -1,10 +1,10 @@
 ﻿using Core.Entities;
-using Iaam.IdentityServer.Models;
-using Iaam.IdentityServer.Services;
+using IdentityServer.Models;
+using IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Iaam.IdentityServer.Controllers
+namespace IdentityServer.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -23,8 +23,8 @@ namespace Iaam.IdentityServer.Controllers
             _logger = logger;
         }
 
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginModel model)
+        [HttpPost("GetToken")]
+        public async Task<IActionResult> GetToken(GetTokenModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
 
@@ -34,26 +34,11 @@ namespace Iaam.IdentityServer.Controllers
                 var userClaims = await _userManager.GetClaimsAsync(user);
                 var token = await _jwtService.GenerateTokenAsync(user, roles, userClaims);
 
-                _logger.LogInformation($"The user with the email {model.Email} has logged in");
+                _logger.LogInformation($"The user with the username {model.Username} has logged in");
                 return Ok(new { Token = token });
             }
 
             return Unauthorized();
-        }
-
-        [HttpPost("Register")]
-        public async Task<IActionResult> Register(RegisterModel model)
-        {
-            var newUser = new UserEntity { UserName = model.Username, Email = model.Email };
-            var result = await _userManager.CreateAsync(newUser, model.Password);
-
-            if (!result.Succeeded)
-            {
-                return BadRequest(result.Errors);
-            }
-
-            _logger.LogInformation($"The user with the email {model.Email} was created");
-            return Ok(new { Message = "Registration successful" });
         }
     }
 }

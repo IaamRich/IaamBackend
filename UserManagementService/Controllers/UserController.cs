@@ -1,23 +1,24 @@
 ﻿using Core.Entities;
+using UserManagementService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Iaam.IdentityServer.Controllers;
+namespace UserManagementService.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
-public class AccountController : ControllerBase
+[Authorize(Roles = "Admin")]
+public class UserController : ControllerBase
 {
     private readonly UserManager<UserEntity> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly ILogger<AccountController> _logger;
+    private readonly ILogger<UserController> _logger;
 
-    public AccountController(UserManager<UserEntity> userManager, 
+    public UserController(UserManager<UserEntity> userManager, 
         RoleManager<IdentityRole> roleManager,
-            ILogger<AccountController> logger)
+            ILogger<UserController> logger)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -25,28 +26,53 @@ public class AccountController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteUser(string id)
+    [HttpPost("Create")]
+    public async Task<IActionResult> Create(RegisterModel model)
     {
+        if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
+        {
+            return BadRequest("Username and password must be provided.");
+        }
+
+        var newUser = new UserEntity { UserName = model.Username, Email = model.Email };
+        var result = await _userManager.CreateAsync(newUser, model.Password);
+
+        if (!result.Succeeded)
+        {
+            return BadRequest(result.Errors);
+        }
+
+        _logger.LogInformation($"The user with the email {model.Email} was created");
+        return Ok(new { Message = "Registration successful" });
+    }
+
+    [HttpDelete("Delete")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            return BadRequest("User ID must be provided.");
+        }
+
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
             _logger.LogInformation($"User with ID {id} not found.");
-            return NotFound();
+            return NotFound($"User with ID {id} doesn't exist.");
         }
 
         var result = await _userManager.DeleteAsync(user);
         if (result.Succeeded)
         {
             _logger.LogInformation($"User with ID {id} was deleted.");
-            return NoContent();
+            return Ok($"User with ID {id} has been deleted.");
         }
 
         return BadRequest(result.Errors);
     }
 
     [HttpPost("AddRole")]
-    public async Task<IActionResult> AddRoleToUser(string userId, string roleName)
+    public async Task<IActionResult> AddRole(string userId, string roleName)
     {
         // Ensure the role exists
         if (!await _roleManager.RoleExistsAsync(roleName))
@@ -81,7 +107,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("RemoveRole")]
-    public async Task<IActionResult> RemoveRoleFromUser(string userId, string roleName)
+    public async Task<IActionResult> RemoveRole(string userId, string roleName)
     {
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null)
@@ -99,9 +125,8 @@ public class AccountController : ControllerBase
         return BadRequest("Failed to remove role from user");
     }
 
-    [Authorize(Roles = "Admin")]
     [HttpPost("AddClaim")]
-    public async Task<IActionResult> AddClaimToUser(string userId, string claimType, string claimValue)
+    public async Task<IActionResult> AddClaim(string userId, string claimType, string claimValue)
     {
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null)
@@ -120,9 +145,8 @@ public class AccountController : ControllerBase
         return BadRequest("Failed to add claim to user");
     }
 
-    [Authorize(Roles = "Admin")]
     [HttpPost("RemoveClaim")]
-    public async Task<IActionResult> RemoveClaimFromUser(string userId, string claimType, string claimValue)
+    public async Task<IActionResult> RemoveClaim(string userId, string claimType, string claimValue)
     {
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null)

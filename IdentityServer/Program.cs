@@ -1,6 +1,6 @@
 using Core.Context;
 using Core.Entities;
-using Iaam.IdentityServer.Services;
+using IdentityServer.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

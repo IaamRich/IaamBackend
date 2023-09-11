@@ -1,4 +1,4 @@
-﻿namespace Iaam.IdentityServer.Models
+﻿namespace UserManagementService.Models
 {
 #nullable disable
     public class RegisterModel : LoginModel
