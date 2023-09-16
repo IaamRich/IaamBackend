@@ -1,0 +1,12 @@
+[
+  {
+    "UserName": "admin",
+    "Email": "vladimircuraciov@gmai.com",
+    "EmailConfirmed": true,
+    "FirstName": "Vladimir",
+    "LastName": "Curaciov",
+    "PhoneNumber": "+37376006755",
+    "PhoneNumberConfirmed": true,
+    "TwoFactorEnabled": true
+  }
+]

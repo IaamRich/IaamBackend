@@ -1,9 +1,7 @@
 ﻿using Core.Entities;
-using UserManagementService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace UserManagementService.Controllers;
 
