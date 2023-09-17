@@ -38,6 +38,8 @@ namespace IdentityServer.Controllers
                 return Ok(new { Token = token });
             }
 
+
+
             return Unauthorized();
         }
     }
