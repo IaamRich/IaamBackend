@@ -1,6 +1,6 @@
 using Core.Context;
 using Core.Entities;
-using Iaam.IdentityServer.Services;
+using IdentityServer.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +44,6 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -57,7 +56,6 @@ builder.Services.AddApplicationInsightsTelemetry();
 //    );
 
 //builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("IaamIdentityLogger", LogLevel.Trace);
-
 
 var app = builder.Build();
 

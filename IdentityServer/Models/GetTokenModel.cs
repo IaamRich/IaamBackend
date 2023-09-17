@@ -1,9 +1,8 @@
-﻿namespace Iaam.IdentityServer.Models
-{ 
+﻿namespace IdentityServer.Models
+{
 #nullable disable
-    public class LoginModel
+    public class GetTokenModel
     {
-        public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
     }
